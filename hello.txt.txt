@@ -3,3 +3,134 @@ hello
 hii
 
 This is the hello.txt.txt file of Sourabh Rawat.....
+
+
+
+
+3 function estimateAmount(){
+    4 
+    5 		
+    6 	var cname = document.getElementById("myName").value;
+    7 	var email=document.getElementById("email").value;
+    8 	var eDate =document.getElementById("eventDate").value;
+    9 	var crowd=document.getElementById("gcount").value;
+   10 	
+   11 	if(validateEventDate1(eDate))
+   12 	   { if(validateEventDate2(eDate))
+   13 	   { if(validateGuestCount(crowd))
+   14 	   {document.getElementById("result").innerHTML=calculateBillAmount(crowd,cname,email);}
+   15 	                else
+   16 	   { alert("Guest count must be minimum 50!!");
+   17 	document.getElementById("gcount").focus();
+   18 	  }
+   19 	  }
+   20 	        else
+   21 	   {	document.getElementById("eventDate").focus();
+   22 	alert("Event date cannot be just 1 or 2 days after current date!!");
+   23 	
+   24 	  }
+   25 	
+   26 	  }
+   27 	else
+   28 	   {
+   29 	alert("Event Date can't be today or before !!");
+   30 	document.getElementById("eventDate").focus();
+   31 	  }
+   32    return false;
+   33 	 }
+   34 function validateEventDate1(eDate)
+   35 	{var eventDate =new Date(eDate);
+   36 	 var today=new Date();
+   37 	 if (eventDate.getTime() <today.getTime()) {
+   38 	             return false;
+   39 	  }
+   40 	  else
+   41 	  { return true;}  
+   42 	 }
+   43 function validateEventDate2(eDate)
+   44 {   var eventDate =new Date(eDate);
+   45     var today=new Date();
+   46 	var edate=today.getDate()+3;
+   47 	var d=new Date(today.getFullYear(),today.getMonth(),edate);
+   48 	
+   49 if(eventDate.getTime()<=d.getTime())
+   50    { return false;}
+   51         else
+   52 	  { return true;} 
+53  }
+   54 function validateGuestCount(crowd)
+   55 { if(crowd<50)
+   56    {return false;}
+   57    else 
+   58    {return true;}     
+   59 
+60 }
+   61 function calculateBillAmount(crowd,cname,email)
+   62 {  
+   63 
+   64     var items="";
+   65     var iprice=0;
+   66     var hallcharge=10000;
+   67     var GST=0.18;
+   68     var foodtype=document.getElementsByName("food");
+   69     var e=document.getElementById("event");
+   70     var eventname=e.options[e.selectedIndex].text;
+   71 
+   72 	if(eventname=='Wedding')
+   73 	{
+   74 	     if(foodtype[0].checked==true &&foodtype[1].checked==true)
+   75 	{
+   76 		iprice=crowd*650;
+   77 			}
+   78 	     else if(foodtype[0].checked==false &&foodtype[1].checked==true)
+   79 	   {
+   80 		iprice=crowd*500;
+   81 		}
+   82 	     else if(foodtype[0].checked==true &&foodtype[1].checked==false)
+   83 	   {
+   84 		iprice=crowd*400;
+   85 	  }
+   86 	}
+   87 	else if(eventname=='Naming Ceremony')
+   88 	{
+   89 	   if(foodtype[0].checked==true &&foodtype[1].checked==true)
+   90 		  {
+   91 		iprice=crowd*500;
+   92 		  }
+   93 	   else if(foodtype[0].checked==false &&foodtype[1].checked==true)	
+   94 		  {
+   95 		iprice=crowd*400;
+   96 		  }
+   97 	   else if(foodtype[0].checked==true &&foodtype[1].checked==false)
+   98 	   {
+   99 	iprice=crowd*350;	
+  100 		}
+  101 	}
+  102 	else
+  103 	  {
+  104 	     if(foodtype[0].checked==true &&foodtype[1].checked==true)
+  105 	   {
+  106 	iprice=crowd*400;
+  107 	  }
+  108 	     else if(foodtype[0].checked==false &&foodtype[1].checked==true)
+  109 	   {
+  110 	iprice=crowd*300;
+  111 	  }
+  112 	     else if(foodtype[0].checked==true &&foodtype[1].checked==false)
+  113 	   {
+  114 	iprice=crowd*250;
+  115 	  }
+  116 	  }
+  117 	
+  118 	if(iprice==0)
+  119 	   {
+  120 		iprice=hallcharge;
+  121 	  }
+  122 	var finalPrice=iprice+iprice*GST;
+  123 		
+  124      return "Dear "+ cname + ",</br>"+"We confirm your Order.The amount is Rs :  "+finalPrice+"</br>"+
+  125 				"Further details will be mailed on :"+"</br>"+email;
+  126 	
+  127 
+  128 
+  129 	}
